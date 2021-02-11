@@ -1,0 +1,12 @@
+docker run -d 
+--name='Collabora' 
+--net='bridge' 
+--privileged=true 
+-e TZ="Europe/Athens" 
+-e HOST_OS="Unraid" 
+-e 'domain'='cloud\.stavrosk\.me|test\.stavrosk\.me' 
+-e 'username'='admin' 
+-e 'password'='tV9n8akuRXgv' 
+-p '9980:9980/tcp' 
+-v '/etc/localtime':'/etc/localtime':'ro' 
+'collabora/code'
