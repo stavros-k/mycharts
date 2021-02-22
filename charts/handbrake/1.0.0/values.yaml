@@ -18,7 +18,7 @@ envTpl:
 env:
 # General Settings
   KEEP_APP_RUNNING: "0"
-  CLEAN_TMP_DIR: "1"
+  CLEAN_TMP_DIR: "0"
 # GUI Settings
   DISPLAY_WIDTH: "1280"
   DISPLAY_HEIGHT: "768"
