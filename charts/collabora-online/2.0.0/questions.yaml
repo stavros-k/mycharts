@@ -24,6 +24,8 @@ portals:
       - "$kubernetes-resource_configmap_portal_host"
     ports:
       - "$kubernetes-resource_configmap_portal_port"
+    paths:
+        - "$kubernetes-resource_configmap_portal_path"
 
 questions:
 
@@ -50,6 +52,14 @@ questions:
             editable: false
             type: string
             default: "https"
+        - variable: path
+          label: "Portal Path"
+          description: "Sets the Path setting on the portal"
+          schema:
+            hidden: true
+            editable: false
+            type: string
+            default: "/loleaflet/dist/admin/admin.html"
 
 
   # Update Policy
