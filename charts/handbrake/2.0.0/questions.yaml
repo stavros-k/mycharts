@@ -344,21 +344,6 @@ questions:
                         default: 36052
                         required: true
 
-
-# Privileged
-  - variable: securityContext
-    group: "Storage and Devices"
-    label: "Security Context"
-    schema:
-      type: dict
-      attrs:
-        - variable: privileged
-          label: "Enable privileged to pass thru an Optical Drive device"
-          schema:
-            type: boolean
-            default: true
-            required: true
-
   - variable: appVolumeMounts
     label: "app storage"
     group: "Storage and Devices"
@@ -613,6 +598,19 @@ questions:
                   type: path
                   required: true
                   default: "/dev/sr0"
+  # Enable privileged
+  - variable: securityContext
+    group: "Storage and Devices"
+    label: "Security Context"
+    schema:
+      type: dict
+      attrs:
+        - variable: privileged
+          label: "Enable privileged to pass thru a USB device"
+          schema:
+            type: boolean
+            default: true
+            required: true                  
 
   - variable: additionalAppVolumeMounts
     label: "Custom app storage"
