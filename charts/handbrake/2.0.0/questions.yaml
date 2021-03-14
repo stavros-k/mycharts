@@ -589,6 +589,30 @@ questions:
                       schema:
                         type: hostpath
                         required: true                        
+        - variable: disc
+          label: "USB Optical Disc Device"
+          schema:
+            type: dict
+            attrs:
+              - variable: setPermissions
+                label: "Automatic Permissions"
+                description: "Automatically set permissions on install"
+                schema:
+                  type: boolean
+                  default: false
+                  hidden: true
+              - variable: hostPath
+                label: "Path to Optical Disc device on host"
+                schema:
+                  type: path
+                  required: true
+                  default: "/dev/sr0"
+              - variable: mountPath
+                label: "Path to mount device inside the container"
+                schema:
+                  type: path
+                  required: true
+                  default: "/dev/sr0"
 
   - variable: additionalAppVolumeMounts
     label: "Custom app storage"
