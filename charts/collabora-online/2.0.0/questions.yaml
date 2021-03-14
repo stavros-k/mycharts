@@ -13,6 +13,8 @@ groups:
     description: "Specify resources to be allocated to workload"
   - name: "Reverse Proxy Configuration"
     description: "Reverse Proxy configuration"
+  - name: "Advanced"
+    description: "Advanced Configuration"
   - name: "WARNING"
     description: "WARNING"
 
@@ -24,8 +26,7 @@ portals:
       - "$kubernetes-resource_configmap_portal_host"
     ports:
       - "$kubernetes-resource_configmap_portal_port"
-    paths:
-      - "$kubernetes-resource_configmap_portal_path"
+    path: "/loleaflet/dist/admin/admin.html"
 
 questions:
 
@@ -44,22 +45,6 @@ questions:
             editable: false
             type: boolean
             default: true
-        - variable: nodePortProtocol
-          label: "Protocol when using NodePort"
-          description: "Enter the protocol to use when using nodeport"
-          schema:
-            hidden: true
-            editable: false
-            type: string
-            default: "https"
-        - variable: path
-          label: "Portal Path"
-          description: "Sets the Path setting on the portal"
-          schema:
-            hidden: true
-            editable: false
-            type: string
-            default: "/loleaflet/dist/admin/admin.html"
 
 
   # Update Policy
@@ -203,13 +188,13 @@ questions:
                       label: "Port Type"
                       schema:
                         type: string
-                        default: "TCP"
-                        hidden: true
+                        default: "HTTP"
+                        hidden: false
                         enum:
-                          - value: TCP
-                            description: "TCP"
-                          - value: "UDP"
-                            description: "UDP"
+                          - value: HTTP
+                            description: "HTTP"
+                          - value: "HTTPS"
+                            description: "HTTPS"
                     - variable: port
                       label: "container port"
                       schema:
@@ -331,21 +316,6 @@ questions:
                         editable: false
                         type: string
                         default: ""
-                    # - variable: servicePort
-                    #   label: "Service Port to proxy to"
-                    #   schema:
-                    #     hidden: true
-                    #     editable: false
-                    #     default: 80
-                    #     type: int
-                        # default:
-                    - variable: serviceKind
-                      label: "Service Kind to proxy to"
-                      schema:
-                        hidden: true
-                        editable: false
-                        type: string
-                        default: ""
                     - variable: entrypoint
                       label: "Select Entrypoint"
                       schema:
@@ -371,29 +341,13 @@ questions:
                                   required: true
                                   schema:
                                     type: string
-                                - variable: paths
-                                  label: "paths"
+                                - variable: path
+                                  label: "path"
                                   schema:
-                                    type: list
-                                    default: []
-                                    items:
-                                      - variable: path
-                                        label: "Path"
-                                        schema:
-                                          type: dict
-                                          attrs:
-                                            - variable: path
-                                              label: "path"
-                                              schema:
-                                                type: string
-                                                required: true
-                                                default: "/"
-                                            - variable: pathType
-                                              label: "pathType"
-                                              schema:
-                                                type: string
-                                                required: true
-                                                default: "prefix"
+                                    type: string
+                                    required: true
+                                    hidden: true
+                                    default: "/"
                     - variable: certType
                       label: "Select Certificate Type"
                       schema:
