@@ -359,16 +359,14 @@ questions:
             default: true
             required: true
 
-# TrueCharts Specific
   - variable: appVolumeMounts
-    label: ""
+    label: "app storage"
     group: "Storage and Devices"
     schema:
       type: dict
       attrs:
-          # config
         - variable: config
-          label: "config Volume"
+          label: "config dataset"
           schema:
             type: dict
             $ref:
@@ -397,33 +395,34 @@ questions:
                   hidden: true
                   editable: false
               - variable: datasetName
-                label: "Name"
+                label: "Dataset Name"
                 schema:
                   type: string
                   default: "config"
+                  required: true
                   editable: false
               - variable: mountPath
-                label: "Mount Path inside the container"
+                label: "Mount Path"
+                description: "Path to mount inside the pod"
                 schema:
                   type: path
+                  required: true
                   default: "/config"
                   editable: false
               - variable: hostPathEnabled
-                label: "config - Enable Host Path"
+                label: "host Path Enabled"
                 schema:
                   type: boolean
                   default: false
                   show_subquestions_if: true
                   subquestions:
                     - variable: hostPath
-                      label: "config Host Path"
-                      description: "Host path to store config"
+                      label: "Host Path"
                       schema:
                         type: hostpath
                         required: true
-          # storage
         - variable: storage
-          label: "storage Volume"
+          label: "storage dataset"
           schema:
             type: dict
             $ref:
@@ -452,33 +451,34 @@ questions:
                   hidden: true
                   editable: false
               - variable: datasetName
-                label: "Name"
+                label: "Dataset Name"
                 schema:
                   type: string
                   default: "storage"
+                  required: true
                   editable: false
               - variable: mountPath
-                label: "Mount Path inside the container"
+                label: "Mount Path"
+                description: "Path to mount inside the pod"
                 schema:
                   type: path
+                  required: true
                   default: "/storage"
                   editable: false
               - variable: hostPathEnabled
-                label: "storage - Enable Host Path"
+                label: "host Path Enabled"
                 schema:
                   type: boolean
                   default: false
                   show_subquestions_if: true
                   subquestions:
                     - variable: hostPath
-                      label: "storage Host Path"
-                      description: "Host path to store storage"
+                      label: "Host Path"
                       schema:
                         type: hostpath
                         required: true
-          # watch
         - variable: watch
-          label: "watch Volume"
+          label: "watch dataset"
           schema:
             type: dict
             $ref:
@@ -507,33 +507,34 @@ questions:
                   hidden: true
                   editable: false
               - variable: datasetName
-                label: "Name"
+                label: "Dataset Name"
                 schema:
                   type: string
                   default: "watch"
+                  required: true
                   editable: false
               - variable: mountPath
-                label: "Mount Path inside the container"
+                label: "Mount Path"
+                description: "Path to mount inside the pod"
                 schema:
                   type: path
+                  required: true
                   default: "/watch"
                   editable: false
               - variable: hostPathEnabled
-                label: "watch - Enable Host Path"
+                label: "host Path Enabled"
                 schema:
                   type: boolean
                   default: false
                   show_subquestions_if: true
                   subquestions:
                     - variable: hostPath
-                      label: "watch Host Path"
-                      description: "Host path to store watch"
+                      label: "Host Path"
                       schema:
                         type: hostpath
                         required: true
-          # output
         - variable: output
-          label: "output Volume"
+          label: "output dataset"
           schema:
             type: dict
             $ref:
@@ -562,58 +563,33 @@ questions:
                   hidden: true
                   editable: false
               - variable: datasetName
-                label: "Name"
+                label: "Dataset Name"
                 schema:
                   type: string
                   default: "output"
+                  required: true
                   editable: false
               - variable: mountPath
-                label: "Mount Path inside the container"
+                label: "Mount Path"
+                description: "Path to mount inside the pod"
                 schema:
                   type: path
+                  required: true
                   default: "/output"
                   editable: false
               - variable: hostPathEnabled
-                label: "output - Enable Host Path"
+                label: "host Path Enabled"
                 schema:
                   type: boolean
                   default: false
                   show_subquestions_if: true
                   subquestions:
                     - variable: hostPath
-                      label: "output Host Path"
-                      description: "Host path to store output"
+                      label: "Host Path"
                       schema:
                         type: hostpath
-                        required: true
-          # Optical Drive
-        - variable: opticaldrive
-          label: "Optical Drive Device"
-          schema:
-            type: dict
-            attrs:
-              - variable: setPermissions
-                label: "Automatic Permissions"
-                description: "Automatically set permissions on install"
-                schema:
-                  type: boolean
-                  default: false
-                  hidden: true
-              - variable: hostPath
-                label: "Path to Optical Drive device on host"
-                description: 'Best to use path "by-id"'
-                schema:
-                  type: path
-                  required: true
-                  default: "/dev/sr0"
-              - variable: mountPath
-                label: "Path to mount device inside the container"
-                schema:
-                  type: path
-                  default: "/dev/sr0"
-                  required: true
+                        required: true                        
 
-    # Reverse Proxy
   - variable: additionalAppVolumeMounts
     label: "Custom app storage"
     group: "Storage and Devices"
@@ -675,6 +651,7 @@ questions:
                   type: hostpath
                   required: true
 
+# Reverse Proxy
   - variable: ingress
     label: ""
     group: "Reverse Proxy Configuration"
