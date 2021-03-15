@@ -22,14 +22,14 @@ groups:
 portals:
   web_portal:
     protocols:
-      - "$kubernetes-resource_configmap_main-portal_protocol"
+      - "$kubernetes-resource_configmap_portal_protocol"
     host:
-      - "$kubernetes-resource_configmap_main-portal_host"
+      - "$kubernetes-resource_configmap_portal_host"
     ports:
-      - "$kubernetes-resource_configmap_main-portal_port"
+      - "$kubernetes-resource_configmap_portal_port"
 # UI
 questions:
-  # Update Policy
+  # Portal
   - variable: portal
     group: "Container Image"
     label: "Configure Portal Button"
@@ -53,6 +53,7 @@ questions:
             editable: false
             type: string
             default: "http"
+  # Update Policy
   - variable: strategyType
     group: "Container Image"
     label: "Update Strategy"
@@ -344,12 +345,15 @@ questions:
                         default: 36052
                         required: true
 
+
+# TrueCharts Specific
   - variable: appVolumeMounts
     label: "app storage"
     group: "Storage and Devices"
     schema:
       type: dict
       attrs:
+        # Config ------------------------
         - variable: config
           label: "config dataset"
           schema:
@@ -406,6 +410,7 @@ questions:
                       schema:
                         type: hostpath
                         required: true
+          # storage ------------------------                        
         - variable: storage
           label: "storage dataset"
           schema:
@@ -462,6 +467,7 @@ questions:
                       schema:
                         type: hostpath
                         required: true
+          # watch ------------------------                        
         - variable: watch
           label: "watch dataset"
           schema:
@@ -518,6 +524,7 @@ questions:
                       schema:
                         type: hostpath
                         required: true
+          # output ------------------------                     
         - variable: output
           label: "output dataset"
           schema:
@@ -574,44 +581,74 @@ questions:
                       schema:
                         type: hostpath
                         required: true                        
-  #       - variable: disc
-  #         label: "USB Optical Disc Device"
-  #         schema:
-  #           type: dict
-  #           attrs:
-  #             - variable: setPermissions
-  #               label: "Automatic Permissions"
-  #               description: "Automatically set permissions on install"
-  #               schema:
-  #                 type: boolean
-  #                 default: false
-  #                 hidden: true
-  #             - variable: hostPath
-  #               label: "Path to Optical Disc device on host"
-  #               schema:
-  #                 type: path
-  #                 required: true
-  #                 default: "/dev/sr0"
-  #             - variable: mountPath
-  #               label: "Path to mount device inside the container"
-  #               schema:
-  #                 type: path
-  #                 required: true
-  #                 default: "/dev/sr0"
-  # # Enable privileged
-  # - variable: securityContext
-  #   group: "Storage and Devices"
-  #   label: "Security Context"
-  #   schema:
-  #     type: dict
-  #     attrs:
-  #       - variable: privileged
-  #         label: "Enable privileged to pass thru a USB device"
-  #         schema:
-  #           type: boolean
-  #           default: true
-  #           required: true                  
-
+          # Optical Drive
+        - variable: opticaldrive
+          label: "Optical Drive Device"
+          schema:
+            type: dict
+            attrs:
+              - variable: enabled
+                label: "Enabled"
+                schema:
+                  type: boolean
+                  default: true
+                  required: true
+                  hidden: true
+                  editable: false
+              - variable: setPermissions
+                label: "Automatic Permissions"
+                description: "Automatically set permissions on install"
+                schema:
+                  type: boolean
+                  default: false
+                  hidden: true
+              - variable: name
+                label: "Mountpoint Name"
+                schema:
+                  type: string
+                  default: "opticaldrive"
+                  required: true
+                  editable: true
+              - variable: emptyDir
+                label: "emptyDir"
+                schema:
+                  type: boolean
+                  default: false
+                  hidden: true
+                  editable: false
+              - variable: mountPath
+                label: "Path to Optical Drive device inside the pod"
+                description: "Preferably the same as the path to the Optical Drive on the host"
+                schema:
+                  type: path
+                  required: true
+                  default: ""
+                  editable: true
+              - variable: hostPathEnabled
+                label: "host Path Enabled"
+                schema:
+                  type: boolean
+                  default: true
+                  hidden: true
+              - variable: hostPath
+                label: "Path to Optical Drive device on host"
+                description: 'Best to use path "by-id"'
+                schema:
+                  type: hostpath
+                  required: true
+# Privileged
+  - variable: securityContext
+    group: "Storage and Devices"
+    label: "Security Context"
+    schema:
+      type: dict
+      attrs:
+        - variable: privileged
+          label: "Enable privileged to pass thru an Optical Drive device"
+          schema:
+            type: boolean
+            default: true
+            required: false
   - variable: additionalAppVolumeMounts
     label: "Custom app storage"
     group: "Storage and Devices"
@@ -672,8 +709,7 @@ questions:
                 schema:
                   type: hostpath
                   required: true
-
-# Reverse Proxy
+  # Reverse Proxy
   - variable: ingress
     label: ""
     group: "Reverse Proxy Configuration"
